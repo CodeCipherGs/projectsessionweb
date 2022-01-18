@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                http://www.springframework.org/schema/mvc
+                http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+        <mvc:annotation-driven />
+        <mvc:resources mapping="/resources/**" location="/resources/" />
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" /><!-- /WEB-INF/jsp/login.jsp -->
+	</bean>
+        <bean name="reunionService"
+		class="com.ghilas.services.ReunionServices">
+		<property name="dao" ref="reunionDao" />
+	</bean>
+        <bean name="dossierService"
+		class="com.ghilas.services.DossierServices">
+		<property name="dao" ref="dossierDao" />
+	</bean>
+        <bean name="membreService"
+		class="com.ghilas.services.MembreServices">
+		<property name="dao" ref="membreDao" />
+	</bean>
+        <bean name="compteRenduService"
+		class="com.ghilas.services.CompteRenduServices">
+		<property name="dao" ref="compteRenduDAO" />
+	</bean>
+        <bean name="membresReunionService"
+		class="com.ghilas.services.MembresReunionServices">
+		<property name="dao" ref="reunionMembresDao" />
+	</bean>
+        <bean name="pointDordreService"
+		class="com.ghilas.services.PointDordreServices">
+		<property name="dao" ref="pointDordreDao" />
+	</bean>
+        
+        <bean id="pointDordreController"
+		class="com.ghilas.controleurs.PointDordreControleur">
+		<property name="serviceReunion" ref="reunionService" />
+		<property name="servicePointDordre" ref="pointDordreService" />
+	</bean>	
+
+	<bean id="dossierController"
+		class="com.ghilas.controleurs.DossierControleur">
+		<property name="service" ref="dossierService" />
+	</bean>	
+        <bean id="AccueilController"
+		class="com.ghilas.controleurs.AccueilControleur">
+	</bean>
+	<bean id="reunionController"
+		class="com.ghilas.controleurs.ReunionControleur">
+		<property name="service" ref="reunionService" />
+	</bean>	
+        <bean id="membreController"
+		class="com.ghilas.controleurs.MembreController">
+		<property name="service" ref="membreService" />
+	</bean>
+        <bean id="detailReunionController"
+		class="com.ghilas.controleurs.DetailReunionControleur">
+		<property name="serviceMembre" ref="membreService" />
+                <property name="serviceMembreReunion" ref="membresReunionService" />
+                <property name="servicePointDordre" ref="pointDordreService" />
+                <property name="serviceReunion" ref="reunionService" />
+	</bean>
+        <bean id="detailDossierControleur"
+		class="com.ghilas.controleurs.DetailDossierControleur">
+                <property name="serviceMembre" ref="membreService" />
+                <property name="serviceDossier" ref="dossierService" />
+	</bean>
+        <bean id="compteRenduControleur"
+		class="com.ghilas.controleurs.CompteRenduControleur">
+                <property name="serviceMembreReunion" ref="membresReunionService" />
+                <property name="servicePointDordre" ref="pointDordreService" />
+                <property name="serviceCompteRendu" ref="compteRenduService" />
+	</bean>
+        <bean id="ajaxDetailReunionControleur"
+		class="com.ghilas.controleurs.AjaxDetailReunionControleur">
+                <property name="serviceMembre" ref="membreService" />
+                <property name="serviceMembreReunion" ref="membresReunionService" />
+                <property name="servicePointDordre" ref="pointDordreService" />
+                <property name="serviceReunion" ref="reunionService" />
+	</bean>
+        
+</beans>

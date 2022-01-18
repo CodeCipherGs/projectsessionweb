@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                http://www.springframework.org/schema/mvc
+                http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+        <mvc:resources mapping="/resources/**" location="/resources/" />	
+        <mvc:annotation-driven />
+        <bean id="connexion" class="com.ghilas.jdbc.Connexion">
+	</bean>
+	<bean id="compteRenduDAO" class="com.ghilas.daos.JdbcCompteRenduDao">
+            <property name="dbConnexion" ref="connexion"/>
+	</bean>
+        <bean id="dossierDao" class="com.ghilas.daos.JdbcDossierDao">
+            <property name="dbConnexion" ref="connexion"/>
+	</bean>
+        <bean id="membreDao" class="com.ghilas.daos.JdbcMembreDao">
+            <property name="dbConnexion" ref="connexion"/>
+	</bean>
+        <bean id="reunionMembresDao" class="com.ghilas.daos.JdbcMembresReunionDao">
+            <property name="dbConnexion" ref="connexion"/>
+	</bean>
+        <bean id="pointDordreDao" class="com.ghilas.daos.JdbcPointDordreDao">
+            <property name="dbConnexion" ref="connexion"/>
+	</bean>
+        <bean id="reunionDao" class="com.ghilas.daos.JdbcReunionDao">
+            <property name="dbConnexion" ref="connexion"/>
+	</bean>
+</beans>

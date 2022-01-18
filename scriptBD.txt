@@ -1,0 +1,223 @@
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `dossier`
+--
+
+CREATE TABLE `dossier` (
+  `ID_DOSSIER` varchar(255) NOT NULL, 
+  `TITRE` varchar(255) NOT NULL,    
+  `DESCRIPTION` varchar(255)NOT NULL,
+  `UNE_DATE` DATE NOT NULL,
+  `IS_ACTIVE` varchar(1) NOT NULL DEFAULT '1',
+   PRIMARY KEY (ID_DOSSIER) 
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `pointsDordre`
+--
+CREATE TABLE `pointsDordre` (
+  `ID_POINT_DORDRE` varchar(255)  NOT NULL, 
+  `NOM` varchar(255) NOT NULL,
+  `DESCRIPTION` varchar(255)NOT NULL,
+  `COMPTE_RENDUS` varchar(255) NOT NULL,
+  `UNE_DATE` DATE NOT NULL,
+  `ID_DOSSIER` varchar(255) NOT NULL,
+  `ID_REUNION` varchar(255) NOT NULL ,
+   PRIMARY KEY (ID_POINT_DORDRE),
+   FOREIGN KEY (ID_DOSSIER) REFERENCES membre(ID_DOSSIER),
+   FOREIGN KEY (ID_REUNION) REFERENCES membre(ID_REUNION)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `membre`
+--
+CREATE TABLE `membre` (
+  `ID_MEMBRE` varchar(255)  NOT NULL, 
+  `NOM` varchar(255) NOT NULL,
+  `MOT_DE_PASSE` varchar(255)NOT NULL,
+  `COURRIEL` varchar(255) NOT NULL,
+  `STATUT` varchar(255)NOT NULL DEFAULT 'Membre',
+  `TELEPHONE` varchar(255) NOT NULL,
+   PRIMARY KEY (ID_MEMBRE) 
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+--
+-- Structure de la table `reunion`
+--
+
+
+CREATE TABLE `reunion` (
+  `ID_REUNION` varchar(255) NOT NULL ,
+  `TITRE` varchar(63) NOT NULL,
+  `UNE_DATE` DATE NOT NULL,
+  `NOM_CHEF` varchar(63) NOT NULL,
+  `DESCRIPTION` varchar(255) NOT NULL,
+  `IS_ACTIVE` varchar(1) NOT NULL DEFAULT '1',
+   PRIMARY KEY (ID_REUNION) 
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table 'ReunionMembre'
+--
+
+CREATE TABLE `reunionMembre` (
+  `ID_MEMBRE` varchar(255) NOT NULL ,
+  `ID_REUNION`  varchar(255) NOT NULL,
+  `NOM` varchar(255) NOT NULL,
+   FOREIGN KEY (ID_MEMBRE) REFERENCES membre(ID_MEMBRE),
+   FOREIGN KEY (ID_REUNION) REFERENCES membre(ID_REUNION),
+   FOREIGN KEY (NOM) REFERENCES membre(NOM)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table 'compteRendu'
+--
+
+CREATE TABLE `compteRendu` (
+  `ID_COMPTE_RENDU` varchar(255) NOT NULL,
+  `ID_MEMBRE` varchar(255) NOT NULL,
+  `ID_POINT_DORDRE`  varchar(255) NOT NULL,   
+  `NOM` varchar(255)NOT NULL,
+  `COMPTE_RENDU` varchar(255)NOT NULL,
+   PRIMARY KEY (ID_COMPTE_RENDU),
+   FOREIGN KEY (ID_MEMBRE) REFERENCES reunionmembre(ID_MEMBRE),
+   FOREIGN KEY (ID_POINT_DORDRE) REFERENCES pointsdordre(ID_POINT_DORDRE),
+   FOREIGN KEY (NOM) REFERENCES membre(NOM)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+
+-- --------------------------------------------------------
+
+--
+-- Contenu de la table `reunion`
+--
+
+INSERT INTO `reunion` (`ID_REUNION`, `TITRE` , `UNE_DATE`,`NOM_CHEF`,`DESCRIPTION`,`IS_ACTIVE` ) VALUES
+('210411', 'Presentation Economique', '2021-04-11', "Roberto Rodriguez","Retour sur le budget et les achats", "1"),
+('210614', 'Management', '2021-03-15', "Maxim Lebeau","La revision de management", "1"),
+('220212', 'Stage Annuel', '2022-02-12', "Karim Leblanc","Debut de stage, choix des postes","1"),
+('210312', 'Implementation Equipe', '2021-03-12', "Jeremy Davidson","Integration de l'equipe dans le projet","1"),
+('211203', 'Projet MP Plagnification', '2021-12-03', "Ali Koorek","Plagnification des actions du projet MP","1"),
+('210321', 'RVP MMO', '2021-03-21', "Paul Masser"," Retour sur le RVP de MMO","1"),
+('220915', 'Reunion de developpeurs', '2021-09-15', "David Pemmer"," Une reunion annuelle de developpeurs", "1"),
+('210601', 'Reunion de directeurs', '2021-06-01', "Kim Tenner"," Une reunion annuelle des directeurs", "1"),
+('211111', 'SSP-ROP', '2021-11-11', "Karim Houper"," Une reunion sur le SSP et le travail fait au cours de l'année","0"),
+('210230', 'Achat Annuele', '2021-02-30', "Denis Jokkers","Discution sur les achats annuels des departements", "1");
+
+--
+-- Contenu de la table `membres`
+--
+
+INSERT INTO `membre` (`ID_MEMBRE`, `NOM`, `MOT_DE_PASSE`, `COURRIEL`, `STATUT`, `TELEPHONE`) VALUES 
+("6ffc5dd1-3cb1-4c20-8822-f55eb2dd31a8","Roberto Rodriguez","123123","rrodriguez@gmail.com","Chef de departement","(438)525-3333"),
+("425b7284-d264-4a69-b97b-15cc701e7a90","Maxim Lebeau","123123","mlebeau@gmail.com","Chef de departement","(514)555-3433"),
+("a448f85e-75a3-40a4-9c1f-9cf814767852","Karim Leblanc","123123","kleblanc@gmail.com","Chef de departement","(514)551-3333"),
+("3c629609-a2ca-474b-8193-afbb5489134e","Jeremy Davidson","123123","jdavidson@gmail.com","Chef de departement","(514)555-3333"),
+("0e47675b-f71c-40a3-b601-c9018af7adb0","Ali Koorek","123123","akoorek@gmail.com","Chef de departement","(438)555-3331"),
+("83239f41-07a6-47cd-b3bc-6c5ff0cec243","Paul Masser","123123","pmassee@gmail.com","Chef de departement","(514)515-3333"),
+("4f09148a-1864-4b38-9aab-1f7ab969582a","David Pemmer","123123","dpemmer@gmail.com","Chef de departement","(514)512-3533"),
+
+("c7290b3d-48be-4bc2-bb60-54208bdca690","Kim Tenner","123123","ktenner@gmail.com","Membre","(514)555-3234"),
+("c9b88770-c626-49cc-9739-3f2406959f79","Denis Jokkers","123123","djokkers@gmail.com","Membre","(514)555-3333"),
+("872f2857-7e46-4ee2-b5ef-5040974e98ab","Montse Claudie","123123","mclaudine@gmail.com","Membre","(438)565-3333"),
+("68f72d9a-c5c1-4439-869a-4fd625ba1769","Rangi Saldis","123123","rsaldi@gmail.com","Membre","(514)585-3332"),
+("5311501f-086a-4a2e-8ed0-bd123c166214","Audo Trym","123123","atrym@gmail.com","Membre","(438)555-3322"),
+("a5f3236a-3fa5-4fa8-9131-4bd0a8bb6859","Jarrett Nuadha","123123","jnuadha@gmail.com","Membre","(514)565-3333"),
+("e4d51166-2193-4198-b07f-870a72ef5c3e","Marion Sunday","123123","msunday@gmail.com","Membre","(514)522-3311");
+
+
+--
+-- Contenu de la table `reunionmembre`
+--
+
+
+INSERT INTO `reunionmembre`(`ID_MEMBRE`, `ID_REUNION`, `NOM`) VALUES ("6ffc5dd1-3cb1-4c20-8822-f55eb2dd31a8","210411","Roberto Rodriguez");
+INSERT INTO `reunionmembre`(`ID_MEMBRE`, `ID_REUNION`, `NOM`) VALUES ("425b7284-d264-4a69-b97b-15cc701e7a90","210614","Maxim Lebeau");
+INSERT INTO `reunionmembre`(`ID_MEMBRE`, `ID_REUNION`, `NOM`) VALUES ("a448f85e-75a3-40a4-9c1f-9cf814767852","220212","Karim Leblanc");
+INSERT INTO `reunionmembre`(`ID_MEMBRE`, `ID_REUNION`, `NOM`) VALUES ("3c629609-a2ca-474b-8193-afbb5489134e","210312","Jeremy Davidson");
+INSERT INTO `reunionmembre`(`ID_MEMBRE`, `ID_REUNION`, `NOM`) VALUES ("0e47675b-f71c-40a3-b601-c9018af7adb0","211203","Ali Koorek");
+INSERT INTO `reunionmembre`(`ID_MEMBRE`, `ID_REUNION`, `NOM`) VALUES ("83239f41-07a6-47cd-b3bc-6c5ff0cec243","210321","Paul Masser");
+INSERT INTO `reunionmembre`(`ID_MEMBRE`, `ID_REUNION`, `NOM`) VALUES ("4f09148a-1864-4b38-9aab-1f7ab969582a","220915","David Pemmer");
+
+INSERT INTO `reunionmembre`(`ID_MEMBRE`, `ID_REUNION`, `NOM`) VALUES ("c7290b3d-48be-4bc2-bb60-54208bdca690","210411","Kim Tenner");
+INSERT INTO `reunionmembre`(`ID_MEMBRE`, `ID_REUNION`, `NOM`) VALUES ("68f72d9a-c5c1-4439-869a-4fd625ba1769","220212","Rangi Saldis");
+INSERT INTO `reunionmembre`(`ID_MEMBRE`, `ID_REUNION`, `NOM`) VALUES ("5311501f-086a-4a2e-8ed0-bd123c166214","210411","Audo Trym");
+INSERT INTO `reunionmembre`(`ID_MEMBRE`, `ID_REUNION`, `NOM`) VALUES ("a5f3236a-3fa5-4fa8-9131-4bd0a8bb6859","210131","Jarrett Nuadha");
+INSERT INTO `reunionmembre`(`ID_MEMBRE`, `ID_REUNION`, `NOM`) VALUES ("c9b88770-c626-49cc-9739-3f2406959f79","210230","Denis Jokkers");
+INSERT INTO `reunionmembre`(`ID_MEMBRE`, `ID_REUNION`, `NOM`) VALUES ("c7290b3d-48be-4bc2-bb60-54208bdca690","210312","Kim Tenner");
+
+--
+-- Contenu de la table `dossier`
+--
+
+INSERT INTO `dossier`(`ID_DOSSIER`, `TITRE`, `DESCRIPTION`, `UNE_DATE`, `IS_ACTIVE`) VALUES
+ ("3cdc028f-0c91-44c5-adc8-dcfbe794bcc6","Projet MP","Revision du travail fait sur le projet MP","2021-11-10","1"),
+ ("1bb6b4c1-e78c-400b-8432-4ecce00b6aa1","Projet SSP-MMO","Amenagement du prijet SSP-MMO et les donnees recu","2021-02-20","1"),
+ ("2d1bd5bb-69da-4a02-a48e-53cd8eb2522c","Projet stage annuel","Les personnes choisie pour le stage annuelle de la compagnie","2021-10-01","1"),
+ ("72a8129f-b060-4f58-a593-4bd190c3df54","Special de mois","La liste de remise aux personnes meritant","2021-05-15","1"),
+ ("602e4eb7-708d-4804-a7b8-a2e651ca5076","Dossier important","Correction des erreurs sur le serveur","2021-06-03","1"),
+ ("dce5ced0-eb54-445e-be47-f017a48f81d8","Session de mois en mois","Gestion et progression des projets mois en mois","2021-09-23","0"),
+ ("f509d715-f86e-4d20-a881-fe3bd4d902fe","Libre service","Implementation de libre service, les details et les personnes impliques","2021-07-14","0"),
+ ("33eec527-5c21-4a40-a78d-8c6d15cd3da9","Dossier revision documents","La revision des fichiers qui ont ete gerer chaque mois","2021-12-23","0");
+
+
+--
+-- Contenu de la table `pointsdordre`
+--
+
+
+INSERT INTO `pointsdordre`(`ID_POINT_DORDRE`, `NOM`, `DESCRIPTION`, `COMPTE_RENDUS`, `UNE_DATE`, `ID_DOSSIER`, `ID_REUNION`) VALUES 
+
+("202105131", "Plagnification", "La plagnification des actions avant la constructino", "Tout va bien","2021-01-01", "3cdc028f-0c91-44c5-adc8-dcfbe794bcc6", "210411"),
+("202111135", "Construction de shema", "Construire le shema de fonctionnements avant tout", "Le deroulement a bien debute. Premier commit","2021-01-02", "3cdc028f-0c91-44c5-adc8-dcfbe794bcc6", "210411"),
+("202107122", "Adaptation des fonctions", "Integration des nouveate sur la plateforme", "Le deroulement a bien debute. Premier commit","2021-01-03", "3cdc028f-0c91-44c5-adc8-dcfbe794bcc6", "210411"),
+("202101125", "Implementation", "Implementation sur le serveur", "Le deroulement a bien debute. Premier commit","2021-01-05", "3cdc028f-0c91-44c5-adc8-dcfbe794bcc6", "210411"),
+
+("202102312", "Ajout de nouveaute", "Les nouvelles focntionnalites sont apportes", "Le deroulement a bien debute. Premier commit","2021-11-10", "72a8129f-b060-4f58-a593-4bd190c3df54", "210131"),
+("202112121", "Correction des bugs", "Gestion des bugs apres l ajout", "Le deroulement a bien debute. Premier commit","2021-11-13", "72a8129f-b060-4f58-a593-4bd190c3df54", "210131"),
+("202105231", "Realisation", "Implementation sur le serveur", "Le deroulement a bien debute. Premier commit","2021-11-16", "72a8129f-b060-4f58-a593-4bd190c3df54", "210131"),
+
+("202104233", "Revision des documents", "Correction des erreur et de mal attendus", "Le deroulement a bien debute. Premier commit","2021-01-01", "33eec527-5c21-4a40-a78d-8c6d15cd3da9", "210312"),
+("202108232", "Apporter des corrections", "Remettre le bon document", "Le deroulement a bien debute. Premier commit","2021-01-01", "33eec527-5c21-4a40-a78d-8c6d15cd3da9", "210312"),
+
+("202110234", "Gestion des exceptions", "Revoir les exceptions generer", "Le deroulement a bien debute. Premier commit","2021-09-23", "1bb6b4c1-e78c-400b-8432-4ecce00b6aa1", "210315"),
+("202105191", "Plagnification", "Faire le plan de deroulement de gestion", "Le deroulement a bien debute. Premier commit","2021-09-24", "1bb6b4c1-e78c-400b-8432-4ecce00b6aa1", "210315"),
+("202105135", "Realisation", "Importer les changements et faire afficher tout", "Le deroulement a bien debute. Premier commit","2021-09-25", "1bb6b4c1-e78c-400b-8432-4ecce00b6aa1", "210315"),
+
+("53445345", "Intergation", "Petit mise a jour", "Le deroulement a bien debute. Premier commit","2021-07-14", "f509d715-f86e-4d20-a881-fe3bd4d902fe", "210614");
+
+--
+-- Contenu de la table `compteRendu`
+--
+
+INSERT INTO `compterendu`(`ID_COMPTE_RENDU`, `ID_MEMBRE`, `ID_POINT_DORDRE`, `NOM`, `COMPTE_RENDU`) VALUES 
+("953d056c-5047-4c65-84f9-84e9cecf17b1","6ffc5dd1-3cb1-4c20-8822-f55eb2dd31a8","202105131","Roberto Rodriguez","C est parfait"),
+("dc2e5258-7d0f-42d3-a8ff-4e02dad980d7","425b7284-d264-4a69-b97b-15cc701e7a90","202111135","Maxim Lebeau","Ma partie est fait. Nouvelle corrections"),
+("871a5035-0f33-4952-9e90-4430c6ab8682","a448f85e-75a3-40a4-9c1f-9cf814767852","202107122","Karim Leblanc","Probleme. Le document est remit"),
+("7e565684-57cb-4e79-a329-fc5efbc0113f","3c629609-a2ca-474b-8193-afbb5489134e","202101125","Jeremy Davidson","Ma partie est fait."),
+("5d8f4012-d8ed-467d-b56c-528b673c8264","0e47675b-f71c-40a3-b601-c9018af7adb0","202102312","Ali Koorek","Ma partie est fait. Bien fait"),
+("f167aba5-75e0-489e-8a73-d9d60ef27c1b","4f09148a-1864-4b38-9aab-1f7ab969582a","202112121","David Pemmer","Bravo"),
+("28c62c3b-72d6-462b-990f-5a367e74c504","5311501f-086a-4a2e-8ed0-bd123c166214","202105231","Audo Trym","Tout est bon!"),
+
+("311eef9f-0a19-441c-bae5-53bd3739430d","5311501f-086a-4a2e-8ed0-bd123c166214","202108232","Audo Trym","Ma partie est fait."),
+("95c84dcb-0a53-4f09-843a-35831384117b","c7290b3d-48be-4bc2-bb60-54208bdca690","202104233","Kim Tenner","Le document est remit"),
+("2e7542dc-4333-4fdb-a6a6-8b701df19c87","83239f41-07a6-47cd-b3bc-6c5ff0cec243","202110234","Paul Masser","Nouvelle corrections"),
+("ddd4e8d7-1ff4-4eaf-b2e5-3645bd21095e","68f72d9a-c5c1-4439-869a-4fd625ba1769","202105135","Rangi Saldis","Tout est bon!"),
+
+("597b848d-96c8-4b5e-bfa2-9b92c022ffb2","c7290b3d-48be-4bc2-bb60-54208bdca690","202108232","Kim Tenner","Je fais ca demain aussi"),
+("49e44be2-910e-4eb0-9514-f8f421b897ab","c7290b3d-48be-4bc2-bb60-54208bdca690","202105135","Kim Tenner","Le document est remit"),
+("40ace68b-910b-4abd-a95b-17d031020bc3","83239f41-07a6-47cd-b3bc-6c5ff0cec243","202112121","Paul Masser","Nouvelle corrections"),
+("edd3ab9e-41dc-4888-80f9-426720b48865","68f72d9a-c5c1-4439-869a-4fd625ba1769","202107122","Rangi Saldis","Tout est bon!");
+

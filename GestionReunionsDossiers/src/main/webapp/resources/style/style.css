@@ -1,0 +1,110 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2018-10-15, 21:51:33
+    Author     : ghilas
+*/
+.jumbotron {
+    background-color: darkgray;
+    color : black;
+    text-align: center;
+    font-weight: bold;
+    text-transform: capitalize;
+    padding : 30px 0;
+    border-radius: 0;
+}
+.titre {
+    background-color: #f18973;
+    color : black;
+    text-align: center;
+    font-weight: bold;
+    text-transform: capitalize;
+    padding : 30px 0;
+    border-radius: 0;
+}
+.navBG {
+    background-color: #b2b2b2;
+ 
+}
+.soustitre {
+    color : black;
+    text-align: center;
+    font-weight: bold;
+    text-transform: capitalize;
+    margin-top: 80px;
+    border-radius: 0;
+    align-content: center;
+}
+.soustitre2 {
+    color : black;
+    font-weight: bold;
+    text-transform: capitalize;
+    margin-top: 80px;
+    border-radius: 0;
+    align-content: center;
+}
+.containerButton {
+  height: 50px;
+  position: relative;
+}
+
+.center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+body{
+    background-color: #f4e1d2;
+}
+table{
+    background-color: LightSkyBlue;
+}
+th{
+    background-color: #bc5a45;
+    text-align: center;
+    text-transform: uppercase;
+   
+}
+td{
+    background-color: #b2b2b2;
+   
+}
+.afficherInfo{
+    background-color: #ffef96; 
+    border: 5px solid #b2b2b2;
+    margin-top: 80px;
+}
+tr{
+    background-color: black;
+   
+}
+.texteAfficher{
+    font-weight: bold;
+    text-transform: capitalize;
+}
+#loginForm, #registerForm, #modificationForm, #addForm {
+    padding: 30px;
+    background-color: #bc5a45;
+}
+.form_head{
+    text-align: center;
+}
+.erreur {
+    color: red;
+}
+footer {
+    border-top : 1px solid black;
+    margin: 50px 0;
+}
+td:first-child {
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
+
